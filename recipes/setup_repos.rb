@@ -34,30 +34,38 @@ case node[:platform]
       apt_repository "cassandra-repo" do
         uri "http://www.apache.org/dist/cassandra/debian"
         components [node[:setup][:deployment], "main"]
-        keyserver "pgp.mit.edu"
+        #keyserver "pgp.mit.edu"
+        keyserver "keys.gnupg.net"
         key "2B5C1B00"
+	#key "F758CE318D77295D"
+	#F758CE318D77295D
         action :add
       end
     end
 
     # Adds the DataStax repo:
     # deb http://debian.riptano.com/<codename> <codename> main
-    apt_repository "datastax-repo" do
-      uri "http://debian.datastax.com/" << node[:internal][:codename]
-      distribution node[:internal][:codename]
-      components ["main"]
-      key "http://debian.datastax.com/debian/repo_key"
-      action :add
-    end
+    #apt_repository "datastax-repo" do
+    #  uri "http://debian.datastax.com/" << node[:internal][:codename]
+    #  distribution node[:internal][:codename]
+    #  components ["main"]
+    #  key "http://debian.datastax.com/debian/repo_key"
+    #  #key "350200F2B999A372"
+    #  action :add
+    #end
+    # fix for add_app 
+    ##execute "add_repository_key" do
+    #	command "wget -O - http://debian.datastax.com/debian/repo_key | apt-key add -"
+    #end
 
-    # Adds the Sun Java repo:
-    # deb http://archive.canonical.com lucid partner
-    apt_repository "sun-java6-jdk" do
-      uri "http://archive.canonical.com"
-      distribution "lucid"
-      components ["partner"]
-      action :add
-    end
+  # Adds the Sun Java repo: --- now added using java  
+  # deb http://archive.canonical.com lucid partner
+  #apt_repository "sun-java6-jdk" do
+  #  uri "http://archive.canonical.com"
+  #  distribution "lucid"
+  #  components ["partner"]
+  #  action :add
+  #end
 
   when "centos", "redhat", "fedora"
     if node[:platform] == "fedora"

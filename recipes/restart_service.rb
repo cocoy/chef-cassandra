@@ -13,7 +13,15 @@
 # 
 ###################################################
 
+execute "set-java" do
+  command 'echo "export JAVA_HOME=/usr/lib/jvm/java-1.6.0-openjdk" | sudo -E tee -a /etc/environment'
+  action :run
+end
+
 # Restart the service
 service "cassandra" do
+    supports :restart => true
+    #notifies :run, resources(:execute => "set-java-home"), :immediately
     action :restart
 end
+

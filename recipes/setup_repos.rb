@@ -30,7 +30,8 @@ case node[:platform]
 
     # Adds the Cassandra repo:
     # deb http://www.apache.org/dist/cassandra/debian <07x|08x> main
-    if node[:setup][:deployment] == "08x" or node[:setup][:deployment] == "07x"
+    #if node[:setup][:deployment] == "08x" or node[:setup][:deployment] == "07x"
+    if node[:setup][:deployment] == "08x" or node[:setup][:deployment] == "07x" or node[:setup][:deployment] == "10x"  or node[:setup][:deployment] == "11x"   
       apt_repository "cassandra-repo" do
         uri "http://www.apache.org/dist/cassandra/debian"
         components [node[:setup][:deployment], "main"]

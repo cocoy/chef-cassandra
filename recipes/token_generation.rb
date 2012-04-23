@@ -31,10 +31,12 @@ if node[:cassandra][:initial_token] == false
     block do
       results = []
       open("/tmp/tokens").each do |line|
-        results << line.split(':')[1].strip if line.include? 'Node'
+     	      
+        results << line.chomp.split(':')[1].strip if line.include? 'Node'
       end
 
-      Chef::Log.info "Setting token to be: #{results[node[:cassandra][:token_position]]}"
+      #Chef::Log.info "Setting token to be: #{results[node[:cassandra][:token_position]]}"
+      Chef::Log.info "Setting token for this node."
       node[:cassandra][:initial_token] = results[node[:cassandra][:token_position]]
     end
   end
